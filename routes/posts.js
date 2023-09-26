@@ -9,11 +9,18 @@ router.route('/')
     .post(auth, upload.single('selectedFile'), postsController.createPost)
 ;
 
+router.route('/search')
+    .get(postsController.getPostBySearch)
+;
+
 router.route('/:id')
+    .get(postsController.getPost)
     .patch(auth, postsController.updatePost)
     .delete(auth, postsController.deletePost)
 ;
 
 router.patch('/:id/likePost', auth, postsController.likePost)
+
+router.post('/:id/postComment', auth, postsController.postComment)
 
 module.exports = router;
