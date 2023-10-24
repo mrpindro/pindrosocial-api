@@ -52,13 +52,12 @@ const getPostBySearch = async (req, res) => {
 
 const createPost = async (req, res) => {
     const {title, message, tags, likes} = req.body;
-    const data = { selectedFile: req.file.path };
 
     
     try {
-        const result = await cloudinary.uploader.upload(data.selectedFile, 
-            {folder: 'pindro-social'}
-        );
+        const b64 = Buffer.from(req.file.buffer).toString('base64');
+        let dataUri = "data:" + req.file.mimetype + ";base64," + b64;
+        const result = await cloudinary.uploader.upload(dataUri, {folder: 'pindro-social'});
 
         const creator = await User.findById(req.userId);
         const newPost = new Post({

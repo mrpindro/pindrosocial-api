@@ -19,7 +19,9 @@ const signUpUser = async (req, res) => {
 
         const hashedPwd = await bcrypt.hash(password, 10);
 
-        const result = await cloudinary.uploader.upload(req.file.path, {folder: 'pindro-social'});
+        const b64 = Buffer.from(req.file.buffer).toString('base64');
+        let dataUri = "data:" + req.file.mimetype + ";base64," + b64;
+        const result = await cloudinary.uploader.upload(dataUri, {folder: 'pindro-social'});
 
         const newUser = await User.create(
             { email, password: hashedPwd, name: `${first_name} ${last_name}`, 

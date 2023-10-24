@@ -15,7 +15,7 @@ console.log(process.env.NODE_ENV);
 
 connectDB();
 
-app.use(logger);
+// app.use(logger);
 
 app.use(cors(corsOptions));
 
